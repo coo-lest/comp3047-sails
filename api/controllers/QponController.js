@@ -5,6 +5,7 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+
 module.exports = {
 
     // action - create
@@ -17,6 +18,14 @@ module.exports = {
         return res.status(201).json({ id: qpon.id });
     },
 
+    // action - delete
+    delete: async function (req, res) {
+        var deletedQpon = await Qpon.destroyOne(req.params.id)
+
+        if (!deletedQpon) return res.notFound();
+
+        return res.ok();
+    },
 
 };
 

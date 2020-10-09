@@ -1,66 +1,125 @@
 <!-- create.ejs -->
-<form action = "/qpon/create" method="POST">
-    
-    <div class="field">
-        <label class="label">Title</label>
-        <div class="control">
-            <input class="input" type="text" name="title" required>
-        </div>
-    </div>
+<form action="/qpon/create" method="POST">
 
-    <div class="field">
-        <label class="label">Restaurant</label>
-        <div class="control">
-            <input class="input" type="text" name="restaurant" required>
-        </div>
-    </div>
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">Title</label>
+                <div class="control">
+                    <input class="input" type="text" name="title" required>
+                </div>
+            </div>
 
-    <div class="field">
-        <label class="label">Region</label>
-        <div class="control">
-            <input class="input" type="text" name="region" required>
-        </div>
-    </div>
+            <div class="field">
+                <label class="label">Restaurant</label>
+                <div class="control">
+                    <input class="input" type="text" name="restaurant" required>
+                </div>
+            </div>
 
-    <div class="field">
-        <label class="label">Mall</label>
-        <div class="control">
-            <input class="input" type="text" name="mall" required>
-        </div>
-    </div>
+            <div class="columns">
+                <div class="column field">
+                    <label class="label">Region</label>
+                    <div class="control">
+                        <div class="select">
+                            <select onchange="regionSelected(this.value)">
+                                <option>Select region</option>
+                                <option value="HK">Hong Kong Island</option>
+                                <option value="KL">Kowloon</option>
+                                <option value="NT">New Territory</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="field">
-        <label class="label">Image</label>
-        <div class="control">
-            <input class="input" type="text" name="image" required>
-        </div>
-    </div>
+                <div class="column field">
+                    <label class="label">Mall</label>
+                    <div class="control">
+                        <div class="select">
+                            <select id="mall" disabled>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <div class="field">
-        <label class="label">Quota</label>
-        <div class="control">
-            <input class="input" type="number" name="quota" required>
+            <div class="field">
+                <label class="label">Image</label>
+                <div class="control">
+                    <input class="input" type="text" name="image" required>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="field">
-        <label class="label">Expiry Date</label>
-        <div class="control">
-            <input class="input" type="text" name="expire" required>
-        </div>
-    </div>
+        <div class="column">
+            <div class="field">
+                <label class="label">Quota</label>
+                <div class="control">
+                    <input class="input" type="number" name="quota" min=0 required>
+                </div>
+            </div>
 
-    <div class="field">
-        <label class="label">Detail</label>
-        <div class="control">
-            <input class="input" type="text" name="detail" required>
-        </div>
-    </div>
+            <div class="field">
+                <label class="label">Expiry Date</label>
+                <div class="control">
+                    <input class="input" type="text" name="expire" required>
+                </div>
+            </div>
 
-    <div class="field">
-        <div class="control">
-            <button class="button" type="submit">Submit</button>
+            <div class="field">
+                <label class="label">Detail</label>
+                <div class="control">
+                    <textarea class="textarea" name="detail"></textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-link" type="submit">Submit</button>
+                </div>
+            </div>
         </div>
     </div>
-    
 </form>
+
+<script>
+
+    var hkMalls = ["ifc", "Taikoo Shing"];
+    var klMalls = ["Festival Walk", "Harbour City"];
+    var ntMalls = ["New Town Plaza", "Maritime Square"];
+
+    function regionSelected(region) {
+        var mallElem = document.getElementById("mall");
+        mallElem.options.length = 0;
+
+        switch (region) {
+            case "HK":
+                hkMalls.forEach(function (item) {
+                    addOption(item, mallElem);
+                });
+                mallElem.disabled = false;
+                break;
+            case "KL":
+                klMalls.forEach(function (item) {
+                    addOption(item, mallElem);
+                });
+                mallElem.disabled = false;
+                break;
+            case "NT":
+                ntMalls.forEach(function (item) {
+                    addOption(item, mallElem);
+                });
+                mallElem.disabled = false;
+                break;
+            default:
+                mallElem.disabled = true;
+        }
+    }
+
+    function addOption(item, elem) {
+        var option = document.createElement("option");
+        option.text = item;
+        option.value = item;
+        elem.add(option);
+    }
+</script>
