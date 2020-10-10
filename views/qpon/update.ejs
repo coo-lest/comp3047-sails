@@ -1,19 +1,18 @@
-<!-- create.ejs -->
-<form action="/qpon/create" method="POST">
+<form action="/qpon/update/<%= qpon.id %>" method="POST">
 
     <div class="columns">
         <div class="column">
             <div class="field">
                 <label class="label">Title</label>
                 <div class="control">
-                    <input class="input" type="text" name="title" required>
+                    <input class="input" type="text" name="title" value="<%= qpon.title %>" required>
                 </div>
             </div>
 
             <div class="field">
                 <label class="label">Restaurant</label>
                 <div class="control">
-                    <input class="input" type="text" name="restaurant" required>
+                    <input class="input" type="text" name="restaurant" value="<%= qpon.restaurant %>" required>
                 </div>
             </div>
 
@@ -46,7 +45,7 @@
             <div class="field">
                 <label class="label">Image</label>
                 <div class="control">
-                    <input class="input" type="text" name="image" required>
+                    <input class="input" type="text" name="image" value="<%= qpon.image %>" required>
                 </div>
             </div>
         </div>
@@ -55,21 +54,21 @@
             <div class="field">
                 <label class="label">Quota</label>
                 <div class="control">
-                    <input class="input" type="number" name="quota" min=0 required>
+                    <input class="input" type="number" name="quota" min=0 value="<%= qpon.quota %>" required>
                 </div>
             </div>
 
             <div class="field">
                 <label class="label">Expiry Date</label>
                 <div class="control">
-                    <input class="input" type="text" name="expire" required>
+                    <input class="input" type="text" name="expire" value="<%= qpon.expire %>" required>
                 </div>
             </div>
 
             <div class="field">
                 <label class="label">Detail</label>
                 <div class="control">
-                    <textarea class="textarea" name="detail"></textarea>
+                    <textarea class="textarea" name="detail"><%= qpon.detail %></textarea>
                 </div>
             </div>
 
@@ -122,4 +121,11 @@
         option.value = item;
         elem.add(option);
     }
+</script>
+
+<!-- Set values for dropboxes -->
+<script>
+    document.querySelector("select[name='region'] option[value='<%= qpon.region %>']").setAttribute("selected", "");
+    regionSelected("<%= qpon.region %>")
+    document.querySelector("select[name='mall'] option[value='<%= qpon.mall %>']").setAttribute("selected", "");
 </script>

@@ -4,8 +4,8 @@
     <% qpons.forEach( function(qpon) { %>
 
         <tr><td><%= qpon.id %></td><td><%= qpon.title %></td><td><%= qpon.restaurant %></td>
-            <td><form action="/qpon/update" method="POST"><button class="button is-link">Update/Delete</button></form></td></tr>
-
+            <td><form action="/qpon/update/<%= qpon.id %>"><button class="button is-link">Update/Delete</button></form></td></tr> 
+ 
     <% }); %>
 
 </table>

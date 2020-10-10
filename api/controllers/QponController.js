@@ -37,8 +37,21 @@ module.exports = {
 
     // action - update
     update: async function (req, res) {
-        return res.send("update");
-    }
+        if (req.method == "GET") {
+            var thatQpon = await Qpon.findOne(req.params.id);
+
+            if (!thatQpon) return res.notFound();
+
+            return res.view('qpon/update', { qpon: thatQpon });
+        } else {
+            // POST
+            var updatedQpon = await Qpon.updateOne(req.params.id).set(req.body);
+
+            if (!updatedQpon) return res.notFound();
+
+            return res.ok();
+        }
+    },
 
 };
 
