@@ -69,6 +69,16 @@ module.exports = {
         if (!displayQpon) return res.notFound();
 
         res.view("qpon/detail", { qpon: displayQpon });
+    },
+
+    // action - home
+    home: async function (req, res) {
+        var hkQpons = await Qpon.find({ where: { region: "HK" }, sort: "createdAt DESC" });
+        var klQpons = await Qpon.find({ where: { region: "KL" }, sort: "createdAt DESC" });
+        var ntQpons = await Qpon.find({ where: { region: "NT" }, sort: "createdAt DESC" });
+
+        console.log(hkQpons);
+        res.view("qpon/homepage", { hkQpons: hkQpons.slice(0, 2), klQpons: klQpons.slice(0, 2), ntQpons: ntQpons.slice(0, 2) });
     }
 };
 

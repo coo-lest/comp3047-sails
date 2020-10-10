@@ -1,25 +1,25 @@
-<nav class="navbar">
+<nav class="navbar is-mobile">
     <div class="navbar-brand">
-        <a class="navbar-item" href="http://localhost:1337">
+        <a class="navbar-item" href="/">
             <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
         </a>
     </div>
 
-    <div id="navbarBasicExample" class="navbar-menu">
+    <div id="navbarBasicExample" class="navbar-menu is-active">
         <div class="navbar-start">
-            <a class="navbar-item" href="http://localhost:1337">
+            <a class="navbar-item" href="/">
                 Home
             </a>
 
-            <a class="navbar-item" href="http://localhost:1337/search">
+            <a class="navbar-item" href="/search">
                 Search
             </a>
 
-            <a class="navbar-item" href="http://localhost:1337/qpon/create">
+            <a class="navbar-item" href="/qpon/create">
                 Create
             </a>
 
-            <a class="navbar-item" href="http://localhost:1337/qpon/admin">
+            <a class="navbar-item" href="/qpon/admin">
                 Admin
             </a>
         </div>
@@ -39,4 +39,73 @@
     </div>
 </nav>
 
+<section class="section">
+    <div class="container">
+        <h1 class="title">Q-Pon</h1>
+        <h2 class="subtitle">Redeem your coins for dining coupons</h2>
+    </div>
+</section>
 
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column" name="hk-col">
+                <h2 class="title is-4">Hong Kong Island</h2>
+                <% hkQpons.forEach( function(qpon) { %>
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <a href="/qpon/detail/<%= qpon.id %>"><img src="<%= qpon.image %>"></a>
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <a href="/qpon/detail/<%= qpon.id %>"><b><%= qpon.restaurant %></b></a>
+                        <div><%= qpon.detail %></div>
+                        <br>
+                        <div>Coins: <%= qpon.coins %></div>
+                    </div>
+                </div>
+                <br>
+                <% }); %>
+            </div>
+            <div class="column" name="kl-col">
+                <h2 class="title is-4">Kowloon</h2>
+                <% klQpons.forEach( function(qpon) { %>
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <a href="/qpon/detail/<%= qpon.id %>"><img src="<%= qpon.image %>"></a>
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <a href="/qpon/detail/<%= qpon.id %>"><b><%= qpon.restaurant %></b></a>
+                        <div><%= qpon.detail %></div>
+                        <br>
+                        <div>Coins: <%= qpon.coins %></div>
+                    </div>
+                </div>
+                <br>
+                <% }); %>
+            </div>
+            <div class="column" name="nt-col">
+                <h2 class="title is-4">New Territory</h2>
+                <% ntQpons.forEach( function(qpon) { %>
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <a href="/qpon/detail/<%= qpon.id %>"><img src="<%= qpon.image %>"></a>
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <a href="/qpon/detail/<%= qpon.id %>"><b><%= qpon.restaurant %></b></a>
+                        <div><%= qpon.detail %></div>
+                        <br>
+                        <div>Coins: <%= qpon.coins %></div>
+                    </div>
+                </div>
+                <br>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</section>

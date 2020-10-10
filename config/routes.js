@@ -19,7 +19,8 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'qpon/homepage' },
+  // '/': { view: 'qpon/homepage' },
+  '/': 'QponController.home',
   'GET /qpon/create': 'QponController.create',
   'POST /qpon/create': 'QponController.create',
   'GET /qpon/admin': 'QponController.admin',
