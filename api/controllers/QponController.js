@@ -27,5 +27,18 @@ module.exports = {
         return res.ok();
     },
 
+    // action - admin
+    admin: async function (req, res) {
+
+        var all = await Qpon.find();
+
+        return res.view('qpon/admin', { qpons: all });
+    },
+
+    // action - update
+    update: async function (req, res) {
+        return res.send("update");
+    }
+
 };
 
