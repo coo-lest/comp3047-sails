@@ -88,7 +88,7 @@ module.exports = {
         if (req.query.minCoins) coinsRange[">="] = req.query.minCoins;
         if (req.query.maxCoins) coinsRange["<="] = req.query.maxCoins;
         if (Object.keys(coinsRange).length != 0) whereClause.coins = coinsRange;
-        if (req.query.validOn) whereClause.expire = { "<=": req.query.validOn };
+        if (req.query.validOn) whereClause.expire = { ">=": req.query.validOn };
         console.log(coinsRange);
         console.log(whereClause);
         var limit = Math.max(req.query.limit, 2) || 2;
