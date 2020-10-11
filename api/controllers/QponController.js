@@ -77,8 +77,29 @@ module.exports = {
         var klQpons = await Qpon.find({ where: { region: "KL" }, sort: "createdAt DESC" });
         var ntQpons = await Qpon.find({ where: { region: "NT" }, sort: "createdAt DESC" });
 
-        console.log(hkQpons);
         res.view("qpon/homepage", { hkQpons: hkQpons.slice(0, 2), klQpons: klQpons.slice(0, 2), ntQpons: ntQpons.slice(0, 2) });
+    },
+
+    // action - search
+    search: async function (req, res) {
+        var whereClause = {};
+        if (req.query.region) whereClause.region = req.query.region;
+        if (req.query.minCoin) whereClause.minCoin = req.query.minCoin;
+        if (req.query.maxCoin) whereClause.maxCoin = req.query.maxCoin;
+        if (req.query.validOn) whereClause.validOn = req.query.validOn;
+
+        var limit = Math.max(req.query.limit, 2) || 2;
+        var offset = Math.max(req.query.offset, 0) || 0;
+
+        var thoseQpons = await Qpon.find({
+            where: whereClause,
+            limit: limit,
+            skip: offset
+        });
+
+        var allResults = await Qpon.find({ where: whereClause });
+        var count = allResults.length;
+        res.view("qpon/search", { qpons: thoseQpons, numOfRecords: count, where: whereClause });
     }
 };
 

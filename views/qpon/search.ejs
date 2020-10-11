@@ -1,0 +1,151 @@
+<div class="columns">
+    <div class="column is-two-thirds">
+        <!-- search result -->
+        <div class="columns">
+            <% qpons.forEach( function (qpon) { %>
+            <div class="column is-half">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <a href="/qpon/detail/<%= qpon.id %>"><img src="<%= qpon.image %>"></a>
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <a href="/qpon/detail/<%= qpon.id %>"><b><%= qpon.restaurant %></b></a>
+                        <div><%= qpon.detail %></div>
+                        <br>
+                        <div>Coins: <%= qpon.coins %></div>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+
+        <nav class="pagination" role="navigation" aria-label="pagination">
+            <a class="pagination-previous" id="previousButton">Previous</a>
+            <a class="pagination-next" id="nextButton">Next page</a>
+            <ul class="pagination-list">
+                <li>
+                    <a class="pagination-link" id="firstLink">1</a>
+                </li>
+                <li>
+                    <span class="pagination-ellipsis">&hellip;</span>
+                </li>
+                <li>
+                    <a class="pagination-link" id="previousLink">45</a>
+                </li>
+                <li>
+                    <a class="pagination-link is-current" id="currentLink">46</a>
+                </li>
+                <li>
+                    <a class="pagination-link" id="nextLink">47</a>
+                </li>
+                <li>
+                    <span class="pagination-ellipsis">&hellip;</span>
+                </li>
+                <li>
+                    <a class="pagination-link" id="lastLink">86</a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+
+    <div class="column is-one-third">
+        <!-- search boxes -->
+        <form action="/qpon/search">
+
+            <div class="field">
+                <label class="label">Region</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="region" onchange="regionSelected(this.value)">
+                            <option value="">Select region</option>
+                            <option value="HK">Hong Kong Island</option>
+                            <option value="KL">Kowloon</option>
+                            <option value="NT">New Territory</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Min. Coins</label>
+                <div class="control">
+                    <input class="input" type="number" name="minCoins" min=0>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Max. Coins</label>
+                <div class="control">
+                    <input class="input" type="number" name="maxCoins" min=0>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Valid On</label>
+                <div class="control">
+                    <input class="input" type="text" name="validOn">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-link" type="submit">Search</div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+<script>
+    function setPagination() {
+
+        var previousButton = document.getElementById("previousButton");
+        var nextButton = document.getElementById("nextButton");
+        var currentLink = document.getElementById("currentLink");
+        var previousLink = document.getElementById("previousLink");
+        var nextLink = document.getElementById("nextLink");
+        var firstLink = document.getElementById("firstLink");
+        var lastLink = document.getElementById("lastLink");
+
+        var numOfRecords = parseInt("<%= numOfRecords %>");
+        var limit = Math.max(parseInt("<%= req.query.limit %>"), 2) || 2;
+        var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;
+
+        var baseUrl = "/qpon/search?region=<%= where.region %>&minCoins=<%= where.coins %>&maxCoins=<%= where.maxCoins %>&validOn=<%= where.validOn %>&limit=" + limit + "&offset=";
+
+        firstLink.href = baseUrl + 0;
+        previousButton.href = baseUrl + (offset - limit);
+        previousLink.href = baseUrl + (offset - limit);
+        currentLink.href = baseUrl + offset;
+        nextLink.href = baseUrl + (offset + limit);
+        nextButton.href = baseUrl + (offset + limit);
+        lastLink.href = baseUrl + (Math.ceil(numOfRecords / limit) - 1) * limit;
+              
+        var currentPageNumber = Math.floor(offset / limit) + 1;
+
+        previousLink.innerHTML = currentPageNumber - 1;
+        currentLink.innerHTML = currentPageNumber;
+        nextLink.innerHTML = currentPageNumber + 1;
+        lastLink.innerHTML = Math.ceil(numOfRecords / limit); 
+
+        if (offset < limit) {
+            previousButton.setAttribute("disabled", true);
+            previousButton.href = "";
+            previousLink.style.display = "none";
+        }
+
+        if (offset + limit >= numOfRecords) {
+            nextButton.setAttribute("disabled", true);
+            nextButton.href = "";
+            nextLink.style.display = "none";
+        }
+    }
+
+    setPagination();
+
+</script>
