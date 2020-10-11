@@ -84,10 +84,13 @@ module.exports = {
     search: async function (req, res) {
         var whereClause = {};
         if (req.query.region) whereClause.region = req.query.region;
-        if (req.query.minCoin) whereClause.minCoin = req.query.minCoin;
-        if (req.query.maxCoin) whereClause.maxCoin = req.query.maxCoin;
-        if (req.query.validOn) whereClause.validOn = req.query.validOn;
-
+        var coinsRange = {};
+        if (req.query.minCoins) coinsRange[">="] = req.query.minCoins;
+        if (req.query.maxCoins) coinsRange["<="] = req.query.maxCoins;
+        if (Object.keys(coinsRange).length != 0) whereClause.coins = coinsRange;
+        if (req.query.validOn) whereClause.expire = { "<=": req.query.validOn };
+        console.log(coinsRange);
+        console.log(whereClause);
         var limit = Math.max(req.query.limit, 2) || 2;
         var offset = Math.max(req.query.offset, 0) || 0;
 
