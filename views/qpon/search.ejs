@@ -122,7 +122,26 @@
         var limit = Math.max(parseInt("<%= req.query.limit %>"), 2) || 2;
         var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;
 
-        var baseUrl = "/qpon/search?region=<%= where.region %>&minCoins=<%= where.coins %>&maxCoins=<%= where.maxCoins %>&validOn=<%= where.validOn %>&limit=" + limit + "&offset=";
+        var baseUrl = "/qpon/search?region=<%= where.region %>";
+        var minCoins, maxCoins;
+        <% if (typeof (where.coins) != 'undefined') { %>
+            <% if (typeof (where.coins[">="] != 'undefined')) { %>
+                minCoins = <%= where.coins[">="] %>;
+            <% } %>
+            <% if (typeof (where.coins["<="] != 'undefined')) { %>
+                maxCoins = <%= where.coins["<="] %>;
+            <% } %>
+        <% } %>
+        if (minCoins) baseUrl += "&minCoins=" + minCoins;
+        if (maxCoins) baseUrl += "&maxCoins=" + maxCoins;
+
+        var validOn;
+        <% if (typeof (where.expire) != 'undefined') { %>
+            validOn = <%= where.expire['>='] %>;
+        <% } %>
+        if(validOn) baseUrl += "&validOn=" + validOn;
+        
+        baseUrl += "&limit=" + limit + "&offset=";
 
         firstLink.href = baseUrl + 0;
         previousButton.href = baseUrl + (offset - limit);
