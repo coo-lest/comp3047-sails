@@ -1,22 +1,26 @@
 <%- partial('../partials/navbar.ejs') %>
 
-<div class="columns">
-    <div class="column is-two-thirds">
-        <figure class="image">
-            <img src="<%= qpon.image %>">
-        </figure>
-    </div>
-    <div class="column is-one-third">
-        <div class="content">
-            <ul>
-                <li><b><%= qpon.restaurant %></b></li>
-                <li><b><%= qpon.title %></b></li>
-                <li><b>Coins: </b><%= qpon.coins %>
-                <li>
-                <li><b>Address: </b><%= qpon.mall %>, <%= qpon.region %></li>
-                <li><b>Expiry Date: </b><%= qpon.expire %></li>
-                <li><%= qpon.detail %></li>
-            </ul>
+<div class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-two-thirds">
+                <figure class="image">
+                    <img src="<%= qpon.image %>">
+                </figure>
+            </div>
+            <div class="column is-one-third">
+                <div class="content">
+                    <ul>
+                        <li><b><%= qpon.restaurant %></b></li>
+                        <li><b><%= qpon.title %></b></li>
+                        <li><b>Coins: </b><%= qpon.coins %>
+                        <li>
+                        <li><b>Address: </b><%= qpon.mall %>, <%= qpon.region %></li>
+                        <li><b>Expiry Date: </b><%= qpon.expire %></li>
+                        <li><%= qpon.detail %></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>

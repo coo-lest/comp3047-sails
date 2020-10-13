@@ -1,102 +1,107 @@
 <!-- create.ejs -->
 <%- partial('../partials/navbar.ejs') %>
 
-<form action="/qpon/create" method="POST">
+<div class="section">
+    <div class="container">
+        <form action="/qpon/create" method="POST">
 
-    <div class="columns">
-        <div class="column">
-            <div class="field">
-                <label class="label">Title</label>
-                <div class="control">
-                    <input class="input" type="text" name="title" required>
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">Restaurant</label>
-                <div class="control">
-                    <input class="input" type="text" name="restaurant" required>
-                </div>
-            </div>
-
-            <div class="columns">
-                <div class="column field">
-                    <label class="label">Region</label>
-                    <div class="control">
-                        <div class="select">
-                            <select name="region" onchange="regionSelected(this.value)">
-                                <option>Select region</option>
-                                <option value="HK">Hong Kong Island</option>
-                                <option value="KL">Kowloon</option>
-                                <option value="NT">New Territory</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="column field">
-                    <label class="label">Mall</label>
-                    <div class="control">
-                        <div class="select">
-                            <select id="mall" name="mall" disabled>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">Image</label>
-                <div class="control">
-                    <input class="input" type="text" name="image" required>
-                </div>
-            </div>
-        </div>
-
-        <div class="column">
             <div class="columns">
                 <div class="column">
                     <div class="field">
-                        <label class="label">Quota</label>
+                        <label class="label">Title</label>
                         <div class="control">
-                            <input class="input" type="number" name="quota" min=0 required>
+                            <input class="input" type="text" name="title" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Restaurant</label>
+                        <div class="control">
+                            <input class="input" type="text" name="restaurant" required>
+                        </div>
+                    </div>
+
+                    <div class="columns">
+                        <div class="column field">
+                            <label class="label">Region</label>
+                            <div class="control">
+                                <div class="select">
+                                    <select name="region" onchange="regionSelected(this.value)">
+                                        <option>Select region</option>
+                                        <option value="HK">Hong Kong Island</option>
+                                        <option value="KL">Kowloon</option>
+                                        <option value="NT">New Territory</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column field">
+                            <label class="label">Mall</label>
+                            <div class="control">
+                                <div class="select">
+                                    <select id="mall" name="mall" disabled>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Image</label>
+                        <div class="control">
+                            <input class="input" type="text" name="image" required>
                         </div>
                     </div>
                 </div>
 
                 <div class="column">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label class="label">Quota</label>
+                                <div class="control">
+                                    <input class="input" type="number" name="quota" min=0 required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="field">
+                                <label class="label">Coins</label>
+                                <div class="control">
+                                    <input class="input" type="number" name="coins" min=0 required>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                     <div class="field">
-                        <label class="label">Coins</label>
+                        <label class="label">Expiry Date</label>
                         <div class="control">
-                            <input class="input" type="number" name="coins" min=0 required>
+                            <input class="input" type="text" name="expire" placeholder="YYYYMMDD" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Detail</label>
+                        <div class="control">
+                            <textarea class="textarea" name="detail"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-link" type="submit">Submit</button>
                         </div>
                     </div>
                 </div>
-                
             </div>
-
-            <div class="field">
-                <label class="label">Expiry Date</label>
-                <div class="control">
-                    <input class="input" type="text" name="expire" placeholder="YYYYMMDD" required>
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">Detail</label>
-                <div class="control">
-                    <textarea class="textarea" name="detail"></textarea>
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <button class="button is-link" type="submit">Submit</button>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
-</form>
+</div>
+
 
 <script>
 
