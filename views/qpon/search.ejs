@@ -125,10 +125,10 @@
         var baseUrl = "/qpon/search?region=<%= where.region %>";
         var minCoins, maxCoins;
         <% if (typeof (where.coins) != 'undefined') { %>
-            <% if (typeof (where.coins[">="] != 'undefined')) { %>
+            <% if (typeof (where.coins[">="]) != 'undefined') { %>
                 minCoins = <%= where.coins[">="] %>;
             <% } %>
-            <% if (typeof (where.coins["<="] != 'undefined')) { %>
+            <% if (typeof (where.coins["<="]) != 'undefined') { %>
                 maxCoins = <%= where.coins["<="] %>;
             <% } %>
         <% } %>
