@@ -8,7 +8,7 @@
 module.exports = {
     login: async function (req, res) {
         if (req.method == "GET") {
-            return res.view("qpon/login");
+            return res.view("user/login");
         }
 
         if (!req.body.username || !req.body.password) return res.badRequest();

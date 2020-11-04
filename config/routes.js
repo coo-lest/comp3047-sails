@@ -30,9 +30,9 @@ module.exports.routes = {
   'GET /qpon/detail/:id': 'QponController.detail',
   'GET /qpon/search': 'QponController.search',
 
-  'GET /qpon/login': 'UserController.login',
-  'POST /qpon/login': 'UserController.login',
-  'POST /qpon/logout': 'UserController.logout',
+  'GET /user/login': 'UserController.login',
+  'POST /user/login': 'UserController.login',
+  'POST /user/logout': 'UserController.logout',
 
 
 
