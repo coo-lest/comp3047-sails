@@ -18,8 +18,15 @@
                         <li><b>Expiry Date: </b><%= qpon.expire %></li>
                         <li><%= qpon.detail %></li>
                     </ul>
+                    <button class="button" onclick='redeem("<%= qpon.id %>")'>Redeem</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    async function redeem (qponId) {
+        var response = await fetch("/qpon/" + qponId, { method: "POST" });
+    }
+</script>

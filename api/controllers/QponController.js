@@ -94,6 +94,22 @@ module.exports = {
         var allResults = await Qpon.find({ where: whereClause });
         var count = allResults.length;
         res.view("qpon/search", { qpons: thoseQpons, numOfRecords: count, where: whereClause });
+    },
+
+    redeem: async function (req, res) {
+
+        if (!await Qpon.findOne(req.params.id)) return res.status(404).json('Qpon not found');
+
+        // add qpon to user model
+        var thatUser = await User.findOne(req.session.uid).populate("coupons", { id: req.params.id });
+
+        if (!thatUser) return res.status(404).json("User not found");
+        
+        if (!thatUser.coupons.length != 0) return res.status(409).json("Already redeemed");
+
+        await Qpon.addToCollection(req.params.id, "owners").members(req.session.uid);
+        
+        return res.ok();
     }
 };
 
