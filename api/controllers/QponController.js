@@ -53,15 +53,6 @@ module.exports = {
         }
     },
 
-    // action - delete
-    delete: async function (req, res) {
-        var deletedQpon = await Qpon.destroyOne(req.params.id);
-
-        if (!deletedQpon) return res.notFound();
-
-        return res.ok();
-    },
-
     // action - detail
     detail: async function (req, res) {
         var displayQpon = await Qpon.findOne(req.params.id);

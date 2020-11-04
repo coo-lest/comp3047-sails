@@ -18,5 +18,11 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
+  QponController: {
+    create: "isAdmin",
+    admin: "isAdmin",
+    update: "isAdmin",
+    delete: "isAdmin",
+  }
 
 };

@@ -25,6 +25,7 @@ module.exports = {
         if (!req.session.username) {
             req.session.username = user.username;
             req.session.uid = user.id;
+            req.session.usertype = user.usertype;
             return res.json(user);
         }
 
@@ -35,6 +36,7 @@ module.exports = {
 
             req.session.username = user.username;
             req.session.uid = user.id;
+            req.session.usertype = user.usertype;
             return res.json(user);
         });
     },
