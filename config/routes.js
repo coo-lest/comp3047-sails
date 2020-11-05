@@ -35,6 +35,7 @@ module.exports.routes = {
   'POST /user/logout': 'UserController.logout',
 
   'POST /qpon/:id': 'QponController.redeem',
+  'GET /qpon/my_coupons': 'QponController.list',
 
 
 

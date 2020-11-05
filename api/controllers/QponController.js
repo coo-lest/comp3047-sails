@@ -122,6 +122,22 @@ module.exports = {
         await User.updateOne(req.session.uid).set(thatUser);
         
         return res.ok();
+    },
+
+    // list coupons of a user
+    list: async function (req, res) {
+
+        var thoseQpons = await Qpon.find().populate("owners", { id: req.session.uid });
+        console.log(thoseQpons);
+
+        if (req.wantsJSON) {
+            console.log("redeemJSON");
+            return res.json(thoseQpons);
+        } else {
+            console.log("redeemNormal");
+            return res.view("qpon/redeemed");
+        }
+        
     }
 };
 
