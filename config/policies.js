@@ -23,6 +23,10 @@ module.exports.policies = {
     admin: "isAdmin",
     update: "isAdmin",
     delete: "isAdmin",
+    redeem: "isMember",
+    list: "isMember",
+    owners: "isAdmin",
+    
   }
 
 };
