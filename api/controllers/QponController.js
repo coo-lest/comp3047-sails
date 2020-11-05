@@ -100,7 +100,6 @@ module.exports = {
 
         if (!await Qpon.findOne(req.params.id)) return res.status(404).json('Qpon not found');
 
-        // add qpon to user model
         var thatUser = await User.findOne(req.session.uid).populate("coupons", { id: req.params.id });
 
         var thatQpon = await Qpon.findOne(req.params.id);
@@ -119,7 +118,7 @@ module.exports = {
         // deduct user coins
         thatUser.coins -= thatQpon.coins;
         await User.updateOne(req.session.uid).set(thatUser);
-        
+
         await Qpon.addToCollection(req.params.id, "owners").members(req.session.uid);
 
         return res.ok();
@@ -128,17 +127,11 @@ module.exports = {
     // list coupons of a user
     list: async function (req, res) {
 
-        var thoseQpons = await Qpon.find().populate("owners", { id: req.session.uid });
-        console.log(thoseQpons);
-
-        if (req.wantsJSON) {
-            console.log("redeemJSON");
-            return res.json(thoseQpons);
-        } else {
-            console.log("redeemNormal");
-            return res.view("qpon/redeemed");
-        }
+        var thatUser = await User.findOne(req.session.uid).populate("coupons");
         
+        if(!thatUser) return res.status(404).json("User not found");
+
+        return res.view("qpon/redeemed", { qpons: thatUser.coupons });
     }
 };
 
