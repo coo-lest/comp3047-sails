@@ -12,7 +12,7 @@
 
     <div class="navbar-menu" id="navMenu">
         <div id="navbarBasicExample" class="navbar-menu is-active">
-            <div class="navbar-start">
+            <div class="navbar-start" id="nav">
                 <a class="navbar-item" href="/">
                     Home
                 </a>
@@ -21,26 +21,9 @@
                     Search
                 </a>
 
-                <a class="navbar-item" href="/qpon/create">
-                    Create
-                </a>
-
-                <a class="navbar-item" href="/qpon/admin">
-                    Admin
-                </a>
             </div>
 
-            <div class="navbar-end">
-            </div>
-            <div class="navbar-item">
-                <div class="buttons">
-                    <a class="button">
-                        Sign up
-                    </a>
-                    <a class="button" href="/user/login">
-                        Log in
-                    </a>
-                </div>
+            <div class="navbar-end" id="nav-end">
             </div>
         </div>
     </div>
@@ -72,4 +55,62 @@
         }
 
     });
+</script>
+
+<script>
+
+    var adminNav = "<a class='navbar-item' href='/qpon/create'>\
+                        Create\
+                    </a>\
+                    <a class='navbar-item' href='/qpon/admin'>\
+                        Admin\
+                    </a>";
+    var memberNav = "<a class='navbar-item' href='/qpon/my_coupons'>\
+                        My Redeemed Coupons\
+                    </a>";
+    var outNavEnd = "<div class='navbar-item'>\
+                    <div class='buttons'>\
+                        <a class='button'>\
+                            Sign up\
+                        </a>\
+                        <a class='button' href='/user/login'>\
+                            Log in\
+                        </a>\
+                    </div>\
+                </div>";
+    var inNavEnd = "<div class='navbar-item'>\
+                    <div class='buttons'>\
+                        <a class='button' href='/user/logout'>\
+                            Log out\
+                        </a>\
+                    </div>\
+                </div>";
+
+    var nav = document.getElementById("nav");
+    var navEnd = document.getElementById("nav-end");
+
+    async function setNavbar() {
+        
+        var response = await fetch("/user/json", { method : "GET" });
+        var json = await response.json();
+
+        console.log(json);
+        // Visitor
+        if (json == "visitor") {
+            navEnd.innerHTML += outNavEnd;
+            return;
+        }
+
+        if (json.usertype == "admin") {
+            console.log("adminNav");
+            nav.innerHTML += adminNav;
+        } else if (json.usertype == "member") {
+            console.log("memberNav");
+            nav.innerHTML += memberNav;
+        }
+        navEnd.innerHTML += inNavEnd;
+    }
+
+    setNavbar();
+
 </script>

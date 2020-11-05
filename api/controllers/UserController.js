@@ -44,10 +44,20 @@ module.exports = {
     logout: async function (req, res) {
         req.session.destroy(function (err) {
             if (err) return serverError(err);
-
-            return res.json(req.session.id);
         });
+        return res.redirect("/");
     },
+
+    // get user information
+    json: async function (req, res) {
+        if (!req.session.uid) return res.json("visitor");
+
+        var thatUser = await User.findOne(req.session.uid);
+
+        if (!thatUser) return res.status(404).json("User not found");
+
+        return res.json({ id: thatUser.id, username: thatUser.username, usertype: thatUser.usertype });
+    }
 
 };
 

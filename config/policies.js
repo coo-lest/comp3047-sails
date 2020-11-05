@@ -27,6 +27,10 @@ module.exports.policies = {
     list: "isMember",
     owners: "isAdmin",
     
+  },
+
+  UserController: {
+    logout: "isUser",
   }
 
 };

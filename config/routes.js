@@ -32,13 +32,13 @@ module.exports.routes = {
 
   'GET /user/login': 'UserController.login',
   'POST /user/login': 'UserController.login',
-  'POST /user/logout': 'UserController.logout',
+  'GET /user/logout': 'UserController.logout',
+  'GET /user/json': 'UserController.json',
 
   'POST /qpon/:id': 'QponController.redeem',
   'GET /qpon/my_coupons': 'QponController.list',
   'GET /qpon/owners/:qid': 'QponController.owners',
   
-
 
   /***************************************************************************
   *                                                                          *

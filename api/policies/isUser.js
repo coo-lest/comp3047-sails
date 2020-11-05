@@ -1,6 +1,6 @@
 module.exports = async function (req, res, proceed) {
 
-    if (req.session.usertype == "admin") {
+    if (req.session.uid) {
         return proceed();
     }
 
