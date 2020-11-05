@@ -113,7 +113,6 @@ module.exports = {
 
         if (thatUser.coupons.length != 0) return res.status(409).json("Already redeemed");
 
-        await Qpon.addToCollection(req.params.id, "owners").members(req.session.uid);
         // deduct qpon quota
         thatQpon.quota--;
         await Qpon.updateOne(req.params.id).set(thatQpon);
@@ -121,6 +120,8 @@ module.exports = {
         thatUser.coins -= thatQpon.coins;
         await User.updateOne(req.session.uid).set(thatUser);
         
+        await Qpon.addToCollection(req.params.id, "owners").members(req.session.uid);
+
         return res.ok();
     },
 
