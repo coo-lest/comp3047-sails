@@ -114,10 +114,10 @@ module.exports = {
 
         // deduct qpon quota
         thatQpon.quota--;
-        await Qpon.updateOne(req.params.id).set(thatQpon);
+        await Qpon.updateOne(req.params.id).set({ quota: thatQpon.quota });
         // deduct user coins
         thatUser.coins -= thatQpon.coins;
-        await User.updateOne(req.session.uid).set(thatUser);
+        await User.updateOne(req.session.uid).set({ coins: thatUser.coins });
 
         await Qpon.addToCollection(req.params.id, "owners").members(req.session.uid);
 
@@ -128,8 +128,8 @@ module.exports = {
     list: async function (req, res) {
 
         var thatUser = await User.findOne(req.session.uid).populate("coupons");
-        
-        if(!thatUser) return res.status(404).json("User not found");
+
+        if (!thatUser) return res.status(404).json("User not found");
 
         return res.view("qpon/redeemed", { qpons: thatUser.coupons });
     }
