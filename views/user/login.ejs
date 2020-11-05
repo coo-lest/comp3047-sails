@@ -45,8 +45,7 @@
 
         if (response.ok) {
             var user = await response.json();
-            alert("Welcome back, " + user.username);
-            location.reload(true);   
+            location.assign("/");   
         } else if (response.status == 401) {
             var msg = await response.json();
             alert(msg);
