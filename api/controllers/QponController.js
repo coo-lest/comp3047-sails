@@ -132,6 +132,15 @@ module.exports = {
         if (!thatUser) return res.status(404).json("User not found");
 
         return res.view("qpon/redeemed", { qpons: thatUser.coupons });
-    }
+    },
+
+    owners: async function (req, res) {
+
+        var thatQpon = await Qpon.findOne(req.params.qid).populate("owners");
+
+        if (!thatQpon) return res.status(404).json("Coupon not found");
+
+        return res.view("qpon/owners", { qpon: thatQpon });
+    },
 };
 

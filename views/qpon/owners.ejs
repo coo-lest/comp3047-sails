@@ -1,0 +1,19 @@
+<%- partial('../partials/navbar.ejs') %>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Q-Pon</h1>
+        <h2 class="subtitle">Redeem your coins for dining coupons</h2>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="subtitle">Owners of Qpon: <b><%= qpon.title %></b></div>
+        <table class="table">
+            <tr><th>uid</th><th>username</th></tr>
+            <% qpon.owners.forEach(function (user) { %>
+                <tr><td><%= user.id %></td><td><%= user.username %></td></tr>
+            <% }) %>
+        </table>
+    </div>
+</section>

@@ -4,11 +4,12 @@
     <div class="container">
 <table class="table">
 
-    <th>ID</th><th>Title</th><th>Restaurant</th><th>Operation</th>
+    <th>ID</th><th>Title</th><th>Restaurant</th><th>Operations</th><th></th>
     <% qpons.forEach( function(qpon) { %>
 
         <tr><td><%= qpon.id %></td><td><%= qpon.title %></td><td><%= qpon.restaurant %></td>
-            <td><form action="/qpon/update/<%= qpon.id %>"><button class="button is-link">Update/Delete</button></form></td></tr> 
+            <td><form action="/qpon/update/<%= qpon.id %>"><button class="button is-link">Update/Delete</button></form></td>
+            <td><form action="/qpon/owners/<%= qpon.id %>"><button class="button">Redeemed Users</button></form></td></tr> 
  
     <% }); %>
 
