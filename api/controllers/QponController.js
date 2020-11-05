@@ -55,7 +55,7 @@ module.exports = {
 
     // action - detail
     detail: async function (req, res) {
-        var displayQpon = await Qpon.findOne(req.params.id);
+        var displayQpon = await Qpon.findOne(req.params.id).populate("owners");
 
         if (!displayQpon) return res.notFound();
 

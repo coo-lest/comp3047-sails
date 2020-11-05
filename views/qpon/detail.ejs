@@ -18,7 +18,11 @@
                         <li><b>Expiry Date: </b><%= qpon.expire %></li>
                         <li><%= qpon.detail %></li>
                     </ul>
+                    <% if (qpon.owners.some(user => user.id == req.session.uid)) { %>
+                    <div>You have redeemed this coupon</div>
+                    <% } else { %>
                     <button class="button" onclick='redeem("<%= qpon.id %>")'>Redeem</button>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -26,7 +30,15 @@
 </div>
 
 <script>
-    async function redeem (qponId) {
+    async function redeem(qponId) {
         var response = await fetch("/qpon/" + qponId, { method: "POST" });
+        if (response.ok) {
+            alert("Redemption successful!");
+            location.assign("/qpon/my_coupons");
+        } else {
+            var json = await response.json();
+            alert(json);
+        }
     }
+
 </script>
