@@ -103,11 +103,23 @@ module.exports = {
         // add qpon to user model
         var thatUser = await User.findOne(req.session.uid).populate("coupons", { id: req.params.id });
 
+        var thatQpon = await Qpon.findOne(req.params.id);
+
         if (!thatUser) return res.status(404).json("User not found");
-        
-        if (!thatUser.coupons.length != 0) return res.status(409).json("Already redeemed");
+
+        if (thatQpon.quota <= 0) return res.status(498).json("Qpon sold out");
+
+        if (thatUser.coins < thatQpon.coins) return res.status(499).json("No enough coins");
+
+        if (thatUser.coupons.length != 0) return res.status(409).json("Already redeemed");
 
         await Qpon.addToCollection(req.params.id, "owners").members(req.session.uid);
+        // deduct qpon quota
+        thatQpon.quota--;
+        await Qpon.updateOne(req.params.id).set(thatQpon);
+        // deduct user coins
+        thatUser.coins -= thatQpon.coins;
+        await User.updateOne(req.session.uid).set(thatUser);
         
         return res.ok();
     }

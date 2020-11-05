@@ -112,19 +112,22 @@ module.exports.bootstrap = async function () {
       {
         username: "cdz",
         password: hash,
-        usertype: "admin"
+        usertype: "admin",
+        coins: 5000
       },
 
       {
         username: "mt",
         password: hash,
-        usertype: "member"
+        usertype: "member",
+        coins: 500
       },
 
       {
         username: "kn",
         password: hash,
-        usertype: "member"
+        usertype: "member",
+        coins: 1000
       },
     ])
   }

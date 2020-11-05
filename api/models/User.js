@@ -15,6 +15,7 @@ module.exports = {
     username: { type: "string" },
     password: { type: "string" },
     usertype: { type: "string" },
+    coins: { type: "number" },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
