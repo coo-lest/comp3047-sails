@@ -18,10 +18,31 @@
                         <li><b>Expiry Date: </b><%= qpon.expire %></li>
                         <li><%= qpon.detail %></li>
                     </ul>
+                    <% if (req.session.uid) { %>
+                    <% if (req.session.usertype == "member") { %>
                     <% if (qpon.owners.some(user => user.id == req.session.uid)) { %>
                     <div>You have redeemed this coupon</div>
                     <% } else { %>
                     <button class="button" onclick='redeem("<%= qpon.id %>")'>Redeem</button>
+                    <% } %>
+                    <% } else { %>
+                    <table>
+                        <tr>
+                            <td>
+                                <form action="/qpon/update/<%= qpon.id %>"><button
+                                        class="button is-link">Update/Delete</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/qpon/owners/<%= qpon.id %>"><button class="button">Redeemed
+                                        Users</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                    <% } %>
+                    <% } else { %>
+                    <button class="button" onclick='location.assign("/user/login")'>Redeem</button>
                     <% } %>
                 </div>
             </div>
