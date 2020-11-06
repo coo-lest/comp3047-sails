@@ -73,27 +73,33 @@ module.exports = {
 
     // action - search
     search: async function (req, res) {
-        var whereClause = {};
-        if (req.query.region) whereClause.region = req.query.region;
-        var coinsRange = {};
-        if (req.query.minCoins) coinsRange[">="] = req.query.minCoins;
-        if (req.query.maxCoins) coinsRange["<="] = req.query.maxCoins;
-        if (Object.keys(coinsRange).length != 0) whereClause.coins = coinsRange;
-        if (req.query.validOn) whereClause.expire = { ">=": req.query.validOn };
-        console.log(coinsRange);
-        console.log(whereClause);
-        var limit = Math.max(req.query.limit, 2) || 2;
-        var offset = Math.max(req.query.offset, 0) || 0;
+        if (req.method == "POST") {
+            console.log(req.body);
+            var whereClause = {};
+            if (req.body.region) whereClause.region = req.body.region;
+            var coinsRange = {};
+            if (req.body.minCoins) coinsRange[">="] = req.body.minCoins;
+            if (req.body.maxCoins) coinsRange["<="] = req.body.maxCoins;
+            if (Object.keys(coinsRange).length != 0) whereClause.coins = coinsRange;
+            if (req.body.validOn) whereClause.expire = { ">=": req.body.validOn };
 
-        var thoseQpons = await Qpon.find({
-            where: whereClause,
-            limit: limit,
-            skip: offset
-        });
+            var thoseQpons = await Qpon.find({
+                where: whereClause,
+            });
 
-        var allResults = await Qpon.find({ where: whereClause });
-        var count = allResults.length;
-        res.view("qpon/search", { qpons: thoseQpons, numOfRecords: count, where: whereClause });
+            var count = thoseQpons.length;
+
+            thoseQpons = await Qpon.find({
+                where: whereClause,
+                limit: req.body.limit,
+                skip: req.body.offset
+            });
+
+            console.log("count: " + count);
+
+            return res.json({ qpons: thoseQpons, numOfRecords: count });
+        }
+        res.view("qpon/search");
     },
 
     redeem: async function (req, res) {

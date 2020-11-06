@@ -5,65 +5,51 @@
         <div class="columns">
             <div class="column is-two-thirds">
                 <!-- search result -->
-                <div class="columns">
-                    <% qpons.forEach( function (qpon) { %>
-                    <div class="column is-half">
-                        <div class="card">
-                            <div class="card-image">
-                                <figure class="image is-4by3">
-                                    <a href="/qpon/detail/<%= qpon.id %>"><img src="<%= qpon.image %>"></a>
-                                </figure>
-                            </div>
-                            <div class="card-content">
-                                <a href="/qpon/detail/<%= qpon.id %>"><b><%= qpon.restaurant %></b></a>
-                                <div><%= qpon.detail %></div>
-                                <br>
-                                <div>Coins: <%= qpon.coins %></div>
-                            </div>
-                        </div>
-                    </div>
-                    <% }) %>
+                <div class="columns" id="results">
+                    <div class="title">Search Qpon!</div>
                 </div>
 
-                <nav class="pagination" role="navigation" aria-label="pagination">
-                    <a class="pagination-previous" id="previousButton">Previous</a>
-                    <a class="pagination-next" id="nextButton">Next page</a>
-                    <ul class="pagination-list">
-                        <li>
-                            <a class="pagination-link" id="firstLink">1</a>
-                        </li>
-                        <li>
-                            <span class="pagination-ellipsis">&hellip;</span>
-                        </li>
-                        <li>
-                            <a class="pagination-link" id="previousLink">45</a>
-                        </li>
-                        <li>
-                            <a class="pagination-link is-current" id="currentLink">46</a>
-                        </li>
-                        <li>
-                            <a class="pagination-link" id="nextLink">47</a>
-                        </li>
-                        <li>
-                            <span class="pagination-ellipsis">&hellip;</span>
-                        </li>
-                        <li>
-                            <a class="pagination-link" id="lastLink">86</a>
-                        </li>
-                    </ul>
-                </nav>
+                <div id="page-bar" hidden>
+                    <nav class="pagination" role="navigation" aria-label="pagination">
+                        <a class="pagination-previous" id="previousButton">Previous</a>
+                        <a class="pagination-next" id="nextButton">Next page</a>
+                        <ul class="pagination-list">
+                            <li>
+                                <a class="pagination-link" id="firstLink">1</a>
+                            </li>
+                            <li>
+                                <span class="pagination-ellipsis">&hellip;</span>
+                            </li>
+                            <li>
+                                <a class="pagination-link" id="previousLink">45</a>
+                            </li>
+                            <li>
+                                <a class="pagination-link is-current" id="currentLink">46</a>
+                            </li>
+                            <li>
+                                <a class="pagination-link" id="nextLink">47</a>
+                            </li>
+                            <li>
+                                <span class="pagination-ellipsis">&hellip;</span>
+                            </li>
+                            <li>
+                                <a class="pagination-link" id="lastLink">86</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
 
             </div>
 
             <div class="column is-one-third">
                 <!-- search boxes -->
-                <form action="/qpon/search">
+                <form action="/qpon/search" onsubmit="submitForm(this); return false">
 
                     <div class="field">
                         <label class="label">Region</label>
                         <div class="control">
                             <div class="select">
-                                <select name="region" onchange="regionSelected(this.value)">
+                                <select name="region">
                                     <option value="">Select region</option>
                                     <option value="HK">Hong Kong Island</option>
                                     <option value="KL">Kowloon</option>
@@ -108,6 +94,10 @@
 
 
 <script>
+
+    var formData;
+    var numOfRecords;
+
     function setPagination() {
 
         var previousButton = document.getElementById("previousButton");
@@ -118,38 +108,18 @@
         var firstLink = document.getElementById("firstLink");
         var lastLink = document.getElementById("lastLink");
 
-        var numOfRecords = parseInt("<%= numOfRecords %>");
-        var limit = Math.max(parseInt("<%= req.query.limit %>"), 2) || 2;
-        var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;
+        var offset = parseInt(formData.get("offset"));
+        var limit = parseInt(formData.get("limit"));
 
-        var baseUrl = "/qpon/search?region=<%= where.region %>";
-        var minCoins, maxCoins;
-        <% if (typeof (where.coins) != 'undefined') { %>
-            <% if (typeof (where.coins[">="]) != 'undefined') { %>
-                minCoins = <%= where.coins[">="] %>;
-            <% } %>
-            <% if (typeof (where.coins["<="]) != 'undefined') { %>
-                maxCoins = <%= where.coins["<="] %>;
-            <% } %>
-        <% } %>
-        if (minCoins) baseUrl += "&minCoins=" + minCoins;
-        if (maxCoins) baseUrl += "&maxCoins=" + maxCoins;
+        console.log("offset" + offset);
+        console.log("limit" + limit);
 
-        var validOn;
-        <% if (typeof (where.expire) != 'undefined') { %>
-            validOn = <%= where.expire['>='] %>;
-        <% } %>
-        if(validOn) baseUrl += "&validOn=" + validOn;
-        
-        baseUrl += "&limit=" + limit + "&offset=";
-
-        firstLink.href = baseUrl + 0;
-        previousButton.href = baseUrl + (offset - limit);
-        previousLink.href = baseUrl + (offset - limit);
-        currentLink.href = baseUrl + offset;
-        nextLink.href = baseUrl + (offset + limit);
-        nextButton.href = baseUrl + (offset + limit);
-        lastLink.href = baseUrl + (Math.ceil(numOfRecords / limit) - 1) * limit;
+        previousButton.setAttribute("onclick", "getData(" + (offset - limit) + ")");
+        previousLink.setAttribute("onclick", "getData(" + (offset - limit) + ")");
+        nextButton.setAttribute("onclick", "getData(" + (offset + limit) + ")");
+        nextLink.setAttribute("onclick", "getData(" + (offset + limit) + ")");
+        firstLink.setAttribute("onclick", "getData(0)");
+        lastLink.setAttribute("onclick", "getData(" + (Math.ceil(numOfRecords / limit) - 1) * limit + ")");
 
         var currentPageNumber = Math.floor(offset / limit) + 1;
 
@@ -160,17 +130,93 @@
 
         if (offset < limit) {
             previousButton.setAttribute("disabled", true);
-            previousButton.href = "";
+            previousButton.removeAttribute("onclick")
             previousLink.style.display = "none";
+        } else {
+            previousButton.removeAttribute("disabled");
+            previousButton.setAttribute("onclick", "getData(" + (offset - limit) + ")");
+            previousLink.style.display = "";
         }
 
         if (offset + limit >= numOfRecords) {
             nextButton.setAttribute("disabled", true);
-            nextButton.href = "";
+            nextButton.removeAttribute("onclick");
             nextLink.style.display = "none";
+        } else {
+            nextButton.removeAttribute("disabled");
+            nextButton.setAttribute("onclick", "getData(" + (offset + limit) + ")");
+            nextLink.style.display = "";
         }
+
+
     }
 
-    setPagination();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    async function submitForm(formElem) {
+        formData = new FormData(formElem);
+        formData.append("limit", 2);
+        formData.append("offset", 0);
+        console.log(formData);
+        await getData(0);
+        document.getElementById("page-bar").removeAttribute("hidden");
+    }
+
+    async function getData(offset) {
+
+        formData.set("offset", offset)
+        var response = await fetch("/qpon/search", {
+            method: "POST",
+            body: formData,
+        });
+
+        var json = await response.json();
+        console.log(json);
+
+        var qpons = json.qpons;
+        numOfRecords = parseInt(json.numOfRecords);
+
+        updatePage(qpons);
+        setPagination();
+    }
+
+    function updatePage(qpons) {
+        var columns = document.getElementById("results");
+
+        columns.innerHTML = "";
+        qpons.forEach(function (qpon) {
+            var result = "<div class='column is-half'>\
+                            <div class='card'>\
+                                <div class='card-image'>\
+                                    <figure class='image is-4by3'>\
+                                        <a href='/qpon/detail/" + qpon.id + "'><img src='" + qpon.image + "'></a>\
+                                    </figure>\
+                                </div>\
+                                <div class='card-content'>\
+                                    <a href='/qpon/detail/" + qpon.id + "'><b>" + qpon.restaurant + "</b></a>\
+                                    <div>" + qpon.detail + "</div>\
+                                    <br>\
+                                    <div>Coins: " + qpon.coins + "</div>\
+                                </div>\
+                            </div>\
+                        </div>";
+            columns.innerHTML += result;
+        });
+
+    }
 
 </script>
