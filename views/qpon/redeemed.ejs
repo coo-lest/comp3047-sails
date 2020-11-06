@@ -8,7 +8,15 @@
 
 <section class="section">
     <div class="container">
-        <div class="subtitle"><b>My Coupons</b></div>
+
+        <div class="columns">
+            <div class="column">
+                <div class="subtitle"><b>My Coupons</b></div>
+            </div>
+            <div class="column">
+                <div class="subtitle"><b>Current Balance: </b><%= coins %></div>
+            </div>
+        </div>
         <div class="columns is-multiline">
 
             <% qpons.forEach(function (qpon) { %>

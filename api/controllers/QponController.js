@@ -137,7 +137,7 @@ module.exports = {
 
         if (!thatUser) return res.status(404).json("User not found");
 
-        return res.view("qpon/redeemed", { qpons: thatUser.coupons });
+        return res.view("qpon/redeemed", { qpons: thatUser.coupons, coins: thatUser.coins });
     },
 
     owners: async function (req, res) {
