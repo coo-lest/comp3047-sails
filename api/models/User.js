@@ -12,9 +12,9 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-    username: { type: "string" },
-    password: { type: "string" },
-    usertype: { type: "string" },
+    username: { type: "string", unique: true, required: true },
+    password: { type: "string", required: true },
+    usertype: { type: "string", required: true },
     coins: { type: "number" },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗

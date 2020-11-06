@@ -13,35 +13,43 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     title: {
-      type: "string"
+      type: "string",
+      required: true
     },
 
     restaurant: {
-      type: "string"
+      type: "string", 
+      required: true
     },
 
     region: {
-      type: "string"
+      type: "string",
+      required: true
     },
 
     mall: {
-      type: "string"
+      type: "string",
+      required: true
     },
 
     image: {
-      type: "string"
+      type: "string",
+      required: true
     },
 
     quota: {
-      type: "number"
+      type: "number",
+      required: true
     },
 
     coins: {
-      type: "number"
+      type: "number",
+      required: true
     },
 
     expire: {
-      type: "string"
+      type: "string",
+      required: true
     },
 
     detail: {
