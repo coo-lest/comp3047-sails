@@ -21,9 +21,47 @@
                     Search
                 </a>
 
+                <% if (req.session.usertype && req.session.usertype == "admin") { %>
+                <a class='navbar-item' href='/qpon/create'>
+                    Create
+                </a>
+                <a class='navbar-item' href='/qpon/admin'>
+                    Admin
+                </a>
+                <% } %>
+
+                <% if (req.session.usertype && req.session.usertype == "member") { %>
+                <a class='navbar-item' href='/qpon/my_coupons'>
+                    My Redeemed Coupons
+                </a>
+                <% } %>
+
             </div>
 
             <div class="navbar-end" id="nav-end">
+                <% if (!req.session.uid) { %>
+                <div class='navbar-item'>
+                    <div class='buttons'>
+                        <a class='button'>
+                            Sign up
+                        </a>
+                        <a class='button' href='/user/login'>
+                            Log in
+                        </a>
+                    </div>
+                </div>
+                <% } else {%>
+                <div class='navbar-item'>
+                    <div>Hi, <%= req.session.username %></div>
+                </div>
+                <div class='navbar-item'>
+                    <div class='buttons'>
+                        <a class='button' href='/user/logout'>
+                            Log out
+                        </a>
+                    </div>
+                </div>
+                <% } %>
             </div>
         </div>
     </div>
@@ -55,63 +93,4 @@
         }
 
     });
-</script>
-
-<script>
-
-    var adminNav = "<a class='navbar-item' href='/qpon/create'>\
-                        Create\
-                    </a>\
-                    <a class='navbar-item' href='/qpon/admin'>\
-                        Admin\
-                    </a>";
-    var memberNav = "<a class='navbar-item' href='/qpon/my_coupons'>\
-                        My Redeemed Coupons\
-                    </a>";
-    var outNavEnd = "<div class='navbar-item'>\
-                    <div class='buttons'>\
-                        <a class='button'>\
-                            Sign up\
-                        </a>\
-                        <a class='button' href='/user/login'>\
-                            Log in\
-                        </a>\
-                    </div>\
-                </div>";
-    var inNavEnd = "<div class='navbar-item'>\
-                    <div class='buttons'>\
-                        <a class='button' href='/user/logout'>\
-                            Log out\
-                        </a>\
-                    </div>\
-                </div>";
-
-    var nav = document.getElementById("nav");
-    var navEnd = document.getElementById("nav-end");
-
-    async function setNavbar() {
-        
-        var response = await fetch("/user/json", { method : "GET" });
-        var json = await response.json();
-
-        console.log(json);
-        // Visitor
-        if (json == "visitor") {
-            navEnd.innerHTML += outNavEnd;
-            return;
-        }
-
-        if (json.usertype == "admin") {
-            console.log("adminNav");
-            nav.innerHTML += adminNav;
-        } else if (json.usertype == "member") {
-            console.log("memberNav");
-            nav.innerHTML += memberNav;
-        }
-        navEnd.innerHTML += "<div class='navbar-item'>Hi " + json.username + "!</div>";
-        navEnd.innerHTML += inNavEnd;
-    }
-
-    setNavbar();
-
 </script>
