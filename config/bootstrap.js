@@ -105,26 +105,26 @@ module.exports.bootstrap = async function () {
   }
 
   var salt = await sails.bcrypt.genSalt(10);
-  var hash = await sails.bcrypt.hash('123456', salt);
+  var hash = await sails.bcrypt.hash('1234', salt);
 
   if (await User.count() == 0) {
     await User.createEach([
       {
-        username: "cdz",
+        username: "admin",
         password: hash,
         usertype: "admin",
-        coins: 5000
+        coins: 0
       },
 
       {
-        username: "mt",
+        username: "martin",
         password: hash,
         usertype: "member",
         coins: 500
       },
 
       {
-        username: "kn",
+        username: "kenny",
         password: hash,
         usertype: "member",
         coins: 1000
