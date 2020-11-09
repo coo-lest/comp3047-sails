@@ -53,13 +53,26 @@
         </div>
 
         <div class="column">
-            <div class="field">
-                <label class="label">Quota</label>
-                <div class="control">
-                    <input class="input" type="number" name="quota" min=0 value="<%= qpon.quota %>" required>
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Quota</label>
+                        <div class="control">
+                            <input class="input" type="number" name="quota" min=0 value="<%= qpon.quota %>" required>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Coins</label>
+                        <div class="control">
+                            <input class="input" type="number" name="coins" min=0 value="<%= qpon.coins %>" required>
+                        </div>
+                    </div>
 
+                </div>
+
+            </div>
             <div class="field">
                 <label class="label">Expiry Date</label>
                 <div class="control">
@@ -83,7 +96,8 @@
 
                 <div class="column field">
                     <div class="control">
-                            <button class="button is-danger" type="submit" formaction="/qpon/delete/<%= qpon.id %>" formmethod="POST">Delete</button>
+                        <button class="button is-danger" type="submit" formaction="/qpon/delete/<%= qpon.id %>"
+                            formmethod="POST">Delete</button>
                     </div>
                 </div>
             </div>
