@@ -15,7 +15,7 @@ module.exports = {
 
         var qpon = await Qpon.create(req.body).fetch();
 
-        return res.status(201).json({ id: qpon.id });
+        return res.redirect("/");
     },
 
     // action - delete
