@@ -64,6 +64,12 @@ module.exports = {
 
     // action - home
     home: async function (req, res) {
+        if (req.wantsJSON) {
+            var json = await Qpon.find();
+            console.log(json);
+            console.log("HOME");
+            return res.json(json);
+        }
         var hkQpons = await Qpon.find({ where: { region: "HK" }, sort: "createdAt DESC" });
         var klQpons = await Qpon.find({ where: { region: "KL" }, sort: "createdAt DESC" });
         var ntQpons = await Qpon.find({ where: { region: "NT" }, sort: "createdAt DESC" });
