@@ -57,7 +57,7 @@ module.exports.bootstrap = async function () {
         title: "1$ Pizza",
         restaurant: "Coolest Pizza",
         region: "HK",
-        mall: "Time Square",
+        mall: "Times Square",
         image: "https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg",
         quota: 300,
         coins: 800,
