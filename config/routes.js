@@ -38,6 +38,7 @@ module.exports.routes = {
 
   'POST /qpon/:id': 'QponController.redeem',
   'GET /qpon/my_coupons': 'QponController.list',
+  'POST /qpon/my_coupons': 'QponController.list',
   'GET /qpon/owners/:qid': 'QponController.owners',
   
 

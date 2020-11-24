@@ -138,10 +138,13 @@ module.exports = {
 
     // list coupons of a user
     list: async function (req, res) {
-
         var thatUser = await User.findOne(req.session.uid).populate("coupons");
 
         if (!thatUser) return res.status(404).json("User not found");
+
+        if (req.wantsJSON) {
+            return res.json(thatUser.coupons);
+        }
 
         return res.view("qpon/redeemed", { qpons: thatUser.coupons, coins: thatUser.coins });
     },
