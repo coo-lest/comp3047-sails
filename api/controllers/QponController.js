@@ -24,7 +24,7 @@ module.exports = {
 
         if (!deletedQpon) return res.notFound();
 
-        return res.redirect("/qpon/admin")
+        return res.ok();
     },
 
     // action - admin
@@ -49,7 +49,7 @@ module.exports = {
 
             if (!updatedQpon) return res.notFound();
 
-            return res.redirect("/qpon/admin");
+            return res.ok();
         }
     },
 

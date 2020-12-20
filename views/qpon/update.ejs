@@ -1,6 +1,6 @@
 <%- partial('../partials/navbar.ejs') %>
 
-<form action="/qpon/update/<%= qpon.id %>" method="POST">
+<form action="/qpon/<%= qpon.id %>" method="POST" onsubmit='formUpd(this); return false;'>
 
     <div class="columns">
         <div class="column">
@@ -96,8 +96,7 @@
 
                 <div class="column field">
                     <div class="control">
-                        <button class="button is-danger" type="submit" formaction="/qpon/delete/<%= qpon.id %>"
-                            formmethod="POST">Delete</button>
+                        <button class="button is-danger" type='button' onclick="del(<%= qpon.id %>)">Delete</button>
                     </div>
                 </div>
             </div>
@@ -152,4 +151,27 @@
     document.querySelector("select[name='region'] option[value='<%= qpon.region %>']").setAttribute("selected", "");
     regionSelected("<%= qpon.region %>")
     document.querySelector("select[name='mall'] option[value='<%= qpon.mall %>']").setAttribute("selected", "");
+</script>
+
+<script>
+    async function del(id) {
+        var response = await fetch('/qpon/' + id, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            location.assign('/qpon/admin');
+        }
+    }
+
+    async function formUpd(formElem) {
+        var response = await fetch(formElem.action, {
+            method: 'PUT',
+            body: new FormData(formElem)
+        });
+
+        if (response.ok) {
+            location.assign('/qpon/admin');
+        }
+    }
 </script>
